@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +20,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hello-world', [PageController::class, 'index']);
+//Route::get('/hello-world', [PageController::class, 'index']);
 
-Route::get('/posts', [PostController::class, 'index']);
-
+Route::controller(PostController::class)->group(function () {
+    Route::prefix('posts')->group(function () {
+    Route::get('/', 'index')->name('posts.index');
+    Route::get('/create', 'create')->name('posts.create');
+    Route::post('/create', 'store');
+    Route::get('/show/{post}', 'show')->name('posts.show');
+    Route::get('/edit/{post}', 'edit')->name('posts.edit');
+    Route::post('/edit/{post}', 'update');
+    Route::get('/delete/{post}', 'destroy')->name('posts.delete');
+    });
+});
