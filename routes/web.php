@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use App\Models\Post;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::get('/hello-world', [PageController::class, 'index']);
+Route::get('/hello-world', [PageController::class, 'index']);
+
 
 Route::controller(PostController::class)->group(function () {
     Route::prefix('posts')->group(function () {
@@ -33,3 +35,21 @@ Route::controller(PostController::class)->group(function () {
     Route::get('/delete/{post}', 'destroy')->name('posts.delete');
     });
 });
+
+Route::controller(ArticleController::class)->group(function () {
+    Route::prefix('articles')->group(function () {
+    Route::get('/', 'index')->name('articles.index');
+    Route::get('/create', 'create')->name('articles.create');
+    Route::post('/create', 'store');
+    Route::get('/show/{article}', 'show')->name('articles.show');
+    Route::get('/edit/{article}', 'edit')->name('articles.edit');
+    Route::post('/edit/{article}', 'update');
+    Route::get('/delete/{article}', 'destroy')->name('articles.delete');
+    });
+});
+
+Route::get('/dashboard', [PostController:: class, 'index'])
+->middleware(['auth'])
+->name('dashboard');
+
+require __DIR__.'/auth.php';

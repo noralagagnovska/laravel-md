@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Contracts\View\View;
@@ -21,12 +22,15 @@ class PostController extends Controller
         return view('posts.create');
     }
 
-    public function store(Request $request)
+    public function store(StorePostRequest $storePostRequest)
     {
-        $requestData = $request->all();
+
+        $validatedData = $storePostRequest->validated();
+        dd($validatedData);
+
         $post = new Post([
-            'title' => $requestData['title'],
-            'body' => $requestData['body'],
+            'title' => $validatedData['title'],
+            'body' => $validatedData['body'],
         ]);
 
         $post->save();
