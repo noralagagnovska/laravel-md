@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleCommentController;
 use App\Http\Controllers\ArticleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
@@ -51,5 +52,12 @@ Route::controller(ArticleController::class)->group(function () {
 Route::get('/dashboard', [PostController:: class, 'index'])
 ->middleware(['auth'])
 ->name('dashboard');
+
+Route::controller(ArticleCommentController::class)->group(function () {
+    Route::prefix('comments')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/store', 'store')->name('comments.store');
+    });
+});
 
 require __DIR__.'/auth.php';

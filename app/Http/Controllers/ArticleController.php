@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreArticleRequest;
 use App\Models\Article;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Contracts\View\View;
@@ -18,15 +19,19 @@ class ArticleController extends Controller
 
     public function create(): View
     {
+        app()->setLocale('lv');
         return view('articles.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreArticleRequest $storeArticleRequest)
     {
-        $requestData = $request->all();
+
+        $validatedData = $storeArticleRequest->validated();
+        dd($validatedData);
+
         $article = new Article([
-            'title' => $requestData['title'],
-            'body' => $requestData['body'],
+            'title' => $validatedData['title'],
+            'body' => $validatedData['body'],
         ]);
 
         $article->save();
