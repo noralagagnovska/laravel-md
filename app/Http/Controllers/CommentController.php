@@ -10,11 +10,10 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'author' => 'string|requred',
+            'author' => 'string|required',
             'body' => 'required|max:255',
             'commentable_id' => 'required',
             'commentable_type' => 'required',
-
         ]);
 
         $comment = new Comment([

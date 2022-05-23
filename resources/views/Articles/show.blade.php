@@ -1,15 +1,26 @@
 
-
 <h1>{{ $article->title }}</h1>
 <p>{{ $article->body}}</p>
 
-@if($article->comments) 
-            @foreach(   
-             <div class="comment">
-                <h4> {{ $comment->author }} </h4>
-                <p> {{ $comment->body }} </p>
-            </div>)
-            @endforeach
+@if ($article->comments)
+@foreach($article->comments as $comment)
+<div class="comment">
+<h4> {{ $comment->author }} </h4>
+<p> {{ $comment->body }} </p>
+</div>
+@endforeach
+
+<p> Comment count: {{ $article->comments()->count() }}
+@endif
+
+@if ($errors->any())
+<div class="alert alert-danger">
+<ul>
+@foreach ($errors->all() as $error)
+<li>{{ $error }}</li>
+@endforeach
+</ul>
+</div>
 @endif
 
 <form action="/comments/store" method="POST">

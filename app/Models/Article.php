@@ -5,6 +5,7 @@ namespace App\Models;
 use Database\Factories\ArticleFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Article extends Model
 {
@@ -19,4 +20,9 @@ class Article extends Model
 {
     return new ArticleFactory();
 }
-}
+
+    public function comments(): MorphMany
+        {
+            return $this->morphMany(Comment::class, 'commentable');
+        }
+    };

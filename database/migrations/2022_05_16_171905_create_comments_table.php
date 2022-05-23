@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('author');
             $table->text('body');
             $table->morphs('commentable');
-            $table->integer('post_id');
             $table->timestamps();
         });
     }

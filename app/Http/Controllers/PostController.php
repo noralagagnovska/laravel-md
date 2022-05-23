@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
-use GuzzleHttp\Psr7\Response;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class PostController extends Controller
 {
-    public function index(): View
+    public function index(): View 
     {
-        return view('posts.index', [
-            'posts' => Post::get(),
-        ]);
+       return view('posts.index', [
+           'posts' => Post::get(),
+       ]);
     }
 
     public function create(): View
@@ -22,22 +20,25 @@ class PostController extends Controller
         return view('posts.create');
     }
 
-    public function store(StorePostRequest $storePostRequest)
+    public function store(Request $request)
     {
-
-        $validatedData = $storePostRequest->validated();
-        dd($validatedData);
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+            'author_name' => 'nullable',
+        ]);
 
         $post = new Post([
             'title' => $validatedData['title'],
             'body' => $validatedData['body'],
+            'author_name' => $validatedData['author_name'],
         ]);
 
         $post->save();
-
+        
         return redirect()->route('posts.show', ['post' => $post]);
-    }
-
+    } 
+    
     public function show(Post $post): View
     {
         return view('posts.show', [
@@ -45,10 +46,8 @@ class PostController extends Controller
         ]);
     }
 
-    public function edit($post)
+    public function edit(Post $post): View
     {
-        $post = Post::findOrFail($post);
-
         return view('posts.edit', [
             'post' => $post,
         ]);
@@ -56,12 +55,17 @@ class PostController extends Controller
 
     public function update(Request $request, Post $post)
     {
-        $requestData = $request->all();
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+            'author_name' => 'nullable',
+        ]);
 
-        $post->title = $requestData['title'];
-        $post->body = $requestData['body'];
+        $post->title = $validatedData['title'];
+        $post->body = $validatedData['body'];
+        $post->author_name = $validatedData['author_name'];
         $post->save();
-
+        
         return redirect()->route('posts.show', ['post' => $post]);
     }
 
@@ -71,4 +75,3 @@ class PostController extends Controller
         return redirect()->route('posts.index');
     }
 }
-
