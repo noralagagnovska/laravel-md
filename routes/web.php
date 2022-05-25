@@ -9,20 +9,22 @@ use App\Models\Post;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/hello-world', [PageController::class, 'index']);
 
 
-Route::controller(PostController::class)->group(function () {
-    Route::prefix('posts')->group(function () {
-    Route::get('/', 'index')->name('posts.index');
-    Route::get('/create', 'create')->name('posts.create');
-    Route::post('/create', 'store');
-    Route::get('/show/{post}', 'show')->name('posts.show');
-    Route::get('/edit/{post}', 'edit')->name('posts.edit');
-    Route::post('/edit/{post}', 'update');
-    Route::get('/delete/{post}', 'destroy')->name('posts.delete');
+Route::group(['middleware' => ['isAdmin']], function () {
+    Route::controller(PostController::class)->group(function () {
+        Route::prefix('posts')->group(function () {
+        Route::get('/', 'index')->name('posts.index');
+        Route::get('/create', 'create')->name('posts.create');
+        Route::post('/create', 'store');
+        Route::get('/show/{post}', 'show')->name('posts.show');
+        Route::get('/edit/{post}', 'edit')->name('posts.edit');
+        Route::post('/edit/{post}', 'update');
+        Route::get('/delete/{post}', 'destroy')->name('posts.delete');
+        });
     });
 });
 
