@@ -24,15 +24,15 @@
             <td>{{ $post->body }}</td>
             <td>{{ $post->author_name }}</td>
             <td>
-                <button class="bg-blue-500 p-2 m-1" href="{{ route('posts.show', ['post' => $post->id]) }}">
+                <a class="bg-blue-500 p-2 m-1" href="{{ route('posts.show', ['post' => $post->id]) }}">
                 Show
-                </button>
-                <button class="bg-orange-500 p-2 m-1" href="{{ route('posts.edit', ['post' => $post->id]) }}">
+                </a>
+                <a class="bg-orange-500 p-2 m-1" href="{{ route('posts.edit', ['post' => $post->id]) }}">
                 Edit
-                </button>
-                <button class="bg-red-500 p-2 m-1" href="{{ route('posts.delete', ['post' => $post->id]) }}">
+                </a>
+                <a class="bg-red-500 p-2 m-1" href="{{ route('posts.delete', ['post' => $post->id]) }}">
                 Delete
-                </button>
+                </a>
             </td>
         </tr>
     @endforeach

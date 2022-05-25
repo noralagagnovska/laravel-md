@@ -13,7 +13,7 @@ class ArticleController extends Controller
     public function index(): View
     {
         return view('articles.index', [
-            'articles' => Article::get(),
+            'articles' => Article::all(),
         ]);
     }
 
@@ -27,7 +27,7 @@ class ArticleController extends Controller
     {
 
         $validatedData = $storeArticleRequest->validated();
-        dd($validatedData);
+        //dd($validatedData);
 
         $article = new Article([
             'title' => $validatedData['title'],
