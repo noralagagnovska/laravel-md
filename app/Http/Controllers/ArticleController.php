@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreArticleRequest;
 use App\Models\Article;
-use GuzzleHttp\Psr7\Response;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
