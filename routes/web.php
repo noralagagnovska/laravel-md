@@ -44,6 +44,10 @@ Route::get('/dashboard', [PostController:: class, 'index'])
 ->middleware(['auth'])
 ->name('dashboard');
 
+Route::get('/dashboard', [ArticleController:: class, 'index'])
+->middleware(['auth'])
+->name('dashboard');
+
 Route::controller(CommentController::class)->group(function () {
     Route::prefix('comments')->group(function () {
         Route::get('/', 'index');
