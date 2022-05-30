@@ -11,9 +11,9 @@
 
     @if ($article->comments)
     @foreach($article->comments as $comment)
-        <div class="comment">
-            <h4> {{ $comment->author }} </h4>
-                <p> {{ $comment->body }} </p>
+        <div class="comment mx-20">
+            <h4 class="font-semibold mb-1"> {{ $comment->author }} </h4>
+                <p class="italic mb-2"> {{ $comment->body }} </p>
         </div>
     @endforeach
 
